@@ -26,8 +26,18 @@ jobs:
         sudo mv ${TMP_WORK_DIR}/eigen-git-mirror /opt/
         sudo ln -s /opt/eigen-git-mirror/Eigen/ /usr/local/include/Eigen
         sudo ln -s /opt/eigen-git-mirror/unsupported/ /usr/local/include/unsupported
+        cd ${TMP_WORK_DIR}
+        git clone https://github.com/boostorg/boost.git
+        cd boost
+        git checkout boost-1.70.0
+        git submodule update --init --recursive
+        sudo ./bootstrap.sh
+        sudo ./b2 install -j2 --prefix=/usr/local; exit 0
+        cd ../../
         rm -rf ${TMP_WORK_DIR}
     - name: make
       run: |
         cd example
         make
+    - name: execute
+      run: ./example
