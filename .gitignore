@@ -1,0 +1,66 @@
+# executable file
+example/example
+example/out.vtu
+
+
+# result or temporary directory
+**/result/
+**/build/
+**/log/
+**/old/
+**/html/
+**/latex/
+**/*.ps
+**/*.png
+**/*.csv
+**/GPATH
+**/GRTAGS
+**/GTAGS
+**/GSYMS
+**/core.*
+**/*.txt
+
+# trush or temporary files
+**/*~
+**/\#*\#
+**/tmp*.*
+**/*.mod
+**/*__genmod*
+**/*.o
+**/*_.*
+**/*.bak
+**/test*
+#*.dat
+**/*\#*
+**/*_
+
+# static lib file
+**/*.a
+
+# VS Code
+**/.vscode
+
+# Eclipse
+## .project & .cproject are managed in git system
+**/.metadata
+**/bin/
+**/tmp/
+**/*.tmp
+**/*.bak
+**/*.swp
+**/*~.nib
+**/local.properties
+**/.settings/
+**/.loadpath
+**/.recommenders
+## External tool builders
+**/.externalToolBuilders/
+## Locally stored "Eclipse launch configurations"
+**/*.launch
+## CDT- autotools
+**/.autotools
+## Code Recommenders
+**/.recommenders/
+## Annotation Processing
+**/.apt_generated/
+
