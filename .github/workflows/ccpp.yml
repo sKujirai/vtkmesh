@@ -1,0 +1,33 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: configure
+      env:
+        TMP_WORK_DIR: "/tmp_dir"
+      run: |
+        mkdir ${TMP_WORK_DIR}
+        cd ${TMP_WORK_DIR}
+        git clone https://github.com/eigenteam/eigen-git-mirror.git
+        cd ${TMP_WORK_DIR}/eigen-git-mirror
+        git checkout 3.3.7
+        cd ${TMP_WORK_DIR}
+        mv ${TMP_WORK_DIR}/eigen-git-mirror /opt/
+        ln -s /opt/eigen-git-mirror/Eigen/ /usr/local/include/Eigen
+        ln -s /opt/eigen-git-mirror/unsupported/ /usr/local/include/unsupported
+        rm -rf ${TMP_WORK_DIR}
+    - name: make
+      run: |
+        cd example
+        make
