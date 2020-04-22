@@ -40,4 +40,5 @@ jobs:
         cd example
         make
     - name: execute
-      run: ./example
+      run: |
+        ./example
