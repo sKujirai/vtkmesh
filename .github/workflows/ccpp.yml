@@ -20,9 +20,9 @@ jobs:
         mkdir ${TMP_WORK_DIR}
         cd ${TMP_WORK_DIR}
         git clone https://github.com/eigenteam/eigen-git-mirror.git
-        cd ${TMP_WORK_DIR}/eigen-git-mirror
+        cd eigen-git-mirror
         git checkout 3.3.7
-        cd ${TMP_WORK_DIR}
+        cd ../../
         mv ${TMP_WORK_DIR}/eigen-git-mirror /opt/
         ln -s /opt/eigen-git-mirror/Eigen/ /usr/local/include/Eigen
         ln -s /opt/eigen-git-mirror/unsupported/ /usr/local/include/unsupported
