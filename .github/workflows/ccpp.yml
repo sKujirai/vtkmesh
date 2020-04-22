@@ -23,9 +23,9 @@ jobs:
         cd eigen-git-mirror
         git checkout 3.3.7
         cd ../../
-        mv ${TMP_WORK_DIR}/eigen-git-mirror /opt/
-        ln -s /opt/eigen-git-mirror/Eigen/ /usr/local/include/Eigen
-        ln -s /opt/eigen-git-mirror/unsupported/ /usr/local/include/unsupported
+        sudo mv ${TMP_WORK_DIR}/eigen-git-mirror /opt/
+        sudo ln -s /opt/eigen-git-mirror/Eigen/ /usr/local/include/Eigen
+        sudo ln -s /opt/eigen-git-mirror/unsupported/ /usr/local/include/unsupported
         rm -rf ${TMP_WORK_DIR}
     - name: make
       run: |
