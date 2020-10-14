@@ -42,9 +42,9 @@ jobs:
     - name: execute_head
       run: |
         cd example
-        ./execute_head
+        ./example_head
     - name: execute_lib
       run: |
         cd example
-        ./execute_lib
+        ./example_lib
   
