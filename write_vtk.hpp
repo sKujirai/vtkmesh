@@ -13,10 +13,23 @@
 #include <queue>
 #include <stack>
 #include <mutex>
+#include <type_traits>
 #include <Eigen/Core>
 #include "config.hpp"
 
 namespace vtkmesh {
+
+    //! Numbering style
+    enum class NumStyle : int {
+        ZERO_BASED = 0,
+        ONE_BASED = 1
+    };
+
+    //! Mesh type
+    enum class MeshType : int {
+        NODE_BASED = 0,
+        ELEMENT_BASED = 1
+    };
 
     /**
      * @class VTK_XML_Writer
@@ -24,22 +37,13 @@ namespace vtkmesh {
      */
     class VTK_XML_Writer {
 
-    public:
-        // Numbering style
-        static constexpr int ZERO_BASED = 0;
-        static constexpr int ONE_BASED = 1;
-
-        // Mesh type
-        static constexpr int NODE_BASED = 0;
-        static constexpr int ELEMENT_BASED = 1;
-
     private:
         FILE *fp;
         int ntpoin, nelemn, ndofnd;
         std::string buffer = "";
         std::queue<std::string> tagBegin;
         std::stack<std::string> tagEnd;
-        const int MESH_TYPE;
+        const MeshType MESH_TYPE;
         const int offset;
         const std::string NEWLINE = "\n";
         const std::string vtkHeader = R"(<?xml version='1.0' encoding='UTF-8'?>)";
@@ -112,8 +116,8 @@ namespace vtkmesh {
         std::mutex mtx;
 
     public:
-        VTK_XML_Writer(const int mesh_type, const int offs = 0)
-        : MESH_TYPE(mesh_type), offset(offs)
+        VTK_XML_Writer(const MeshType mesh_type, const NumStyle offs = NumStyle::ZERO_BASED)
+        : MESH_TYPE(mesh_type), offset(static_cast<int>(offs))
         {}
         virtual ~VTK_XML_Writer(){}
 
@@ -130,10 +134,7 @@ namespace vtkmesh {
         VTKMESH_API void setNodalValue(const std::vector<int>& Val, const std::string& dlabel, const std::string& datTyp = "Int32", const std::string& format = "ascii" );
 
         //! Set value on each element
-        VTKMESH_API void setElmValue(const Eigen::MatrixXd& Val,
-                         const std::string& dlabel,
-                         const std::string& datTyp = "Float32",
-                         const std::string& format = "ascii" );
+        VTKMESH_API void setElmValue(const Eigen::MatrixXd& Val, const std::string& dlabel, const std::string& datTyp = "Float32", const std::string& format = "ascii" );
 
         //! Set value on each element (std::vector)
         VTKMESH_API void setElmValue(const std::vector<int>& Val, const std::string& dlabel, const std::string& datTyp = "Int32", const std::string& format = "ascii" );

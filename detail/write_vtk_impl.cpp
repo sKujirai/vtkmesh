@@ -354,15 +354,15 @@ namespace vtkmesh {
     VTKMESH_INLINE void VTK_XML_Writer::setMeshInfo(const Eigen::MatrixXd& Coords, const std::vector<std::vector<int>>& Lnodes){
 
         switch(MESH_TYPE){
-            case NODE_BASED:
+            case MeshType::NODE_BASED:
                 setMeshInfoELM(Coords, getDummyConnectivity(Coords));
                 break;
-            case ELEMENT_BASED:
+            case MeshType::ELEMENT_BASED:
                 setMeshInfoELM(Coords, Lnodes);
                 break;
             default:
                 std::cerr << "[ERROR] " << __FILE__ << ":" << __LINE__ << ": " << __func__ << ": ";
-                std::cerr << "Invalid mesh type: " << MESH_TYPE << std::endl;
+                std::cerr << "Invalid mesh type: " << static_cast<int>(MESH_TYPE) << std::endl;
                 exit(EXIT_FAILURE);
                 break;
         }

@@ -25,12 +25,11 @@ int main(void){
 
     std::unique_ptr<vtkmesh::VTK_XML_Writer> vtkw;
     try {
-        vtkw = std::make_unique<vtkmesh::VTK_XML_Writer>(vtkmesh::VTK_XML_Writer::ELEMENT_BASED, vtkmesh::VTK_XML_Writer::ZERO_BASED);
+        vtkw = std::make_unique<vtkmesh::VTK_XML_Writer>(vtkmesh::MeshType::ELEMENT_BASED, vtkmesh::NumStyle::ZERO_BASED);
     } catch (const std::exception& e){
         std::cout << e.what() << std::endl;
         exit(EXIT_FAILURE);
     }
-    // std::cout << vtkw->getOffset() << std::endl;
     vtkw->setVtkFormat("UnstructuredGrid");
     vtkw->setMeshInfo(vtkr->getCoordinates(), vtkr->getConnectivity());
     vtkw->writeVtkFile(outputfile);
