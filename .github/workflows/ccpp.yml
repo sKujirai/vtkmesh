@@ -2,7 +2,7 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, dev_* ]
   pull_request:
     branches: [ master ]
 
@@ -39,7 +39,12 @@ jobs:
       run: |
         cd example
         make
-    - name: execute
+    - name: execute_head
       run: |
         cd example
-        ./example
+        ./example_head
+    - name: execute_lib
+      run: |
+        cd example
+        ./example_lib
+  

@@ -10,10 +10,10 @@
 #include <iostream>
 #include "../write_vtk.hpp"
 
-namespace VtkMesh {
+namespace vtkmesh {
 
     //! Check tag
-    bool VTK_XML_Writer::checkType(const std::vector<std::string>& strVec, const std::string& inputStr){
+    VTKMESH_INLINE bool VTK_XML_Writer::checkType(const std::vector<std::string>& strVec, const std::string& inputStr){
         for(const auto& s : strVec){
             if(s == inputStr){
                 return true;
@@ -23,14 +23,14 @@ namespace VtkMesh {
     }
 
     //! Write tag [begin]
-    void VTK_XML_Writer::writeTagBegin(const std::string& strbgn){
+    VTKMESH_INLINE void VTK_XML_Writer::writeTagBegin(const std::string& strbgn){
         buffer += R"(<)" + strbgn + R"(>)" + NEWLINE;
         tagEnd.push(strbgn);
         return;
     }
 
     //! Write tag [end]
-    void VTK_XML_Writer::writeTagEnd(const std::string& strend){
+    VTKMESH_INLINE void VTK_XML_Writer::writeTagEnd(const std::string& strend){
         if(strend != tagEnd.top()){
             std::cerr << "[ERROR] " << __FILE__ << ":" << __LINE__ << ": " << __func__ << ": ";
             std::cerr << "Invalid order of tag: " << strend << " " << tagEnd.top() << std::endl;
@@ -43,10 +43,7 @@ namespace VtkMesh {
     }
 
     //! Write tag [begin dataArray]
-    void VTK_XML_Writer::dataArrayBegin(const int numCmp,
-                                        const std::string& datTyp,
-                                        const std::string& dtName,
-                                        const std::string& format){
+    VTKMESH_INLINE void VTK_XML_Writer::dataArrayBegin(const int numCmp, const std::string& datTyp, const std::string& dtName, const std::string& format){
 
         std::string numstr = "";
         if(numCmp > 0){
@@ -80,10 +77,10 @@ namespace VtkMesh {
     }
 
     //! Write tag [end dataArray]
-    void VTK_XML_Writer::dataArrayEnd(){ writeTagEnd("DataArray"); }
+    VTKMESH_INLINE void VTK_XML_Writer::dataArrayEnd(){ writeTagEnd("DataArray"); }
 
     //! Write Vector (std::vector) (Val - offset)
-    void VTK_XML_Writer::writeVector(const std::vector<int>& vec, const int offset){
+    VTKMESH_INLINE void VTK_XML_Writer::writeVector(const std::vector<int>& vec, const int offset){
         int nsize = (int)(vec.size());
         for(int i=0;i<nsize;i++){
             buffer += std::to_string(vec[i]-offset) + " ";
@@ -92,7 +89,7 @@ namespace VtkMesh {
     }
 
     //! Write Vector of Vector (Val - 1)
-    void VTK_XML_Writer::writeVec2nd(const std::vector<std::vector<int>>& vec2nd, const int offset){
+    VTKMESH_INLINE void VTK_XML_Writer::writeVec2nd(const std::vector<std::vector<int>>& vec2nd, const int offset){
         int ncol = (int)(vec2nd.size());
         for(int j=0;j<ncol;j++){
             int nrow = (int)(vec2nd[j].size());
@@ -105,10 +102,7 @@ namespace VtkMesh {
     }
 
     //! Set Value
-    void VTK_XML_Writer::setValue(const Eigen::MatrixXd& Val,
-                                  const std::string& dlabel,
-                                  const std::string& datTyp,
-                                  const std::string& format){
+    VTKMESH_INLINE void VTK_XML_Writer::setValue(const Eigen::MatrixXd& Val, const std::string& dlabel, const std::string& datTyp, const std::string& format){
 
         if(!checkType(vtkDataType, datTyp)){
             std::cerr << "[ERROR] " << __FILE__ << ":" << __LINE__ << ": " << __func__ << ": ";
@@ -129,10 +123,7 @@ namespace VtkMesh {
     }
 
     //! Set Value (std::vector)
-    void VTK_XML_Writer::setValue(const std::vector<int>& Val,
-                                  const std::string& dlabel,
-                                  const std::string& datTyp,
-                                  const std::string& format){
+    VTKMESH_INLINE void VTK_XML_Writer::setValue(const std::vector<int>& Val, const std::string& dlabel, const std::string& datTyp, const std::string& format){
 
         if(!checkType(vtkDataType, datTyp)){
             std::cerr << "[ERROR] " << __FILE__ << ":" << __LINE__ << ": " << __func__ << ": ";
@@ -153,7 +144,7 @@ namespace VtkMesh {
     }
 
     //! Begin Tag
-    void VTK_XML_Writer::begin(const std::string& vtkUnit){
+    VTKMESH_INLINE void VTK_XML_Writer::begin(const std::string& vtkUnit){
         if(!checkType(vtkDataUnit, vtkUnit)){
             std::cerr << "[ERROR] " << __FILE__ << ":" << __LINE__ << ": " << __func__ << ": ";
             std::cerr << "Invalid VTK Tag: " << vtkUnit << std::endl;
@@ -163,13 +154,10 @@ namespace VtkMesh {
     }
 
     //! End Tag
-    void VTK_XML_Writer::end(const std::string& vtkUnit){ writeTagEnd(vtkUnit); }
+    VTKMESH_INLINE void VTK_XML_Writer::end(const std::string& vtkUnit){ writeTagEnd(vtkUnit); }
 
     //! Set nodal value
-    void VTK_XML_Writer::setNodalValue(const Eigen::MatrixXd& Val,
-                                       const std::string& dlabel,
-                                       const std::string& datTyp,
-                                       const std::string& format){
+    VTKMESH_INLINE void VTK_XML_Writer::setNodalValue(const Eigen::MatrixXd& Val, const std::string& dlabel, const std::string& datTyp, const std::string& format){
 
         if((Val.rows()) != ntpoin){
             std::cerr << "[ERROR] " << __FILE__ << ":" << __LINE__ << ": " << __func__ << ": ";
@@ -182,10 +170,7 @@ namespace VtkMesh {
     }
 
     //! Set nodal value (std::vector)
-    void VTK_XML_Writer::setNodalValue(const std::vector<int>& Val,
-                                       const std::string& dlabel,
-                                       const std::string& datTyp,
-                                       const std::string& format){
+    VTKMESH_INLINE void VTK_XML_Writer::setNodalValue(const std::vector<int>& Val, const std::string& dlabel, const std::string& datTyp, const std::string& format){
 
         if((int)Val.size() != ntpoin){
             std::cerr << "[ERROR] " << __FILE__ << ":" << __LINE__ << ": " << __func__ << ": ";
@@ -198,10 +183,7 @@ namespace VtkMesh {
     }
 
     //! Set value on each element
-    void VTK_XML_Writer::setElmValue(const Eigen::MatrixXd& Val,
-                                     const std::string& dlabel,
-                                     const std::string& datTyp,
-                                     const std::string& format){
+    VTKMESH_INLINE void VTK_XML_Writer::setElmValue(const Eigen::MatrixXd& Val, const std::string& dlabel, const std::string& datTyp, const std::string& format){
 
         if((Val.rows()) != nelemn){
             std::cerr << "[ERROR] " << __FILE__ << ":" << __LINE__ << ": " << __func__ << ": ";
@@ -214,10 +196,7 @@ namespace VtkMesh {
     }
 
     //! Set value on each element (std::vector)
-    void VTK_XML_Writer::setElmValue(const std::vector<int>& Val,
-                                     const std::string& dlabel,
-                                     const std::string& datTyp,
-                                     const std::string& format){
+    VTKMESH_INLINE void VTK_XML_Writer::setElmValue(const std::vector<int>& Val, const std::string& dlabel, const std::string& datTyp, const std::string& format){
 
         if((int)Val.size() != nelemn){
             std::cerr << "[ERROR] " << __FILE__ << ":" << __LINE__ << ": " << __func__ << ": ";
@@ -230,7 +209,7 @@ namespace VtkMesh {
     }
 
     //! Set format
-    void VTK_XML_Writer::setVtkFormat(const std::string& _vtkType, const std::string& _discretization_method, const std::string& _byteOrder){
+    VTKMESH_INLINE void VTK_XML_Writer::setVtkFormat(const std::string& _vtkType, const std::string& _discretization_method, const std::string& _byteOrder){
 
         if(!checkType(vtkType, _vtkType)){
             std::cerr << "[ERROR] " << __FILE__ << ":" << __LINE__ << ": " << __func__ << ": ";
@@ -256,7 +235,7 @@ namespace VtkMesh {
     }
 
     //! Set dummy connectivity for Meshfree
-    std::vector<std::vector<int>> VTK_XML_Writer::getDummyConnectivity(const Eigen::MatrixXd& Coords){
+    VTKMESH_INLINE std::vector<std::vector<int>> VTK_XML_Writer::getDummyConnectivity(const Eigen::MatrixXd& Coords){
 
         std::vector<std::vector<int>> DummyLnodes(Coords.cols());
         for(int i=0;i<(int)DummyLnodes.size();++i){
@@ -267,7 +246,7 @@ namespace VtkMesh {
     }
 
     //! Get cell type
-    int VTK_XML_Writer::getCelltype(const int ndofnd, const int nnodes){
+    VTKMESH_INLINE int VTK_XML_Writer::getCelltype(const int ndofnd, const int nnodes){
 
         switch(ndofnd){
         case 2:
@@ -323,8 +302,7 @@ namespace VtkMesh {
     }
 
     //! Set mesh info for FEM
-    void VTK_XML_Writer::setMeshInfoELM(const Eigen::MatrixXd& Coords,
-                                        const std::vector<std::vector<int>>& Lnodes){
+    VTKMESH_INLINE void VTK_XML_Writer::setMeshInfoELM(const Eigen::MatrixXd& Coords, const std::vector<std::vector<int>>& Lnodes){
 
         // Set Piece
         ntpoin = Coords.cols();
@@ -373,19 +351,18 @@ namespace VtkMesh {
     }
 
     //! Set Coordinates
-    void VTK_XML_Writer::setMeshInfo(const Eigen::MatrixXd& Coords,
-                                     const std::vector<std::vector<int>>& Lnodes){
+    VTKMESH_INLINE void VTK_XML_Writer::setMeshInfo(const Eigen::MatrixXd& Coords, const std::vector<std::vector<int>>& Lnodes){
 
         switch(MESH_TYPE){
-            case NODE_BASED:
+            case MeshType::NODE_BASED:
                 setMeshInfoELM(Coords, getDummyConnectivity(Coords));
                 break;
-            case ELEMENT_BASED:
+            case MeshType::ELEMENT_BASED:
                 setMeshInfoELM(Coords, Lnodes);
                 break;
             default:
                 std::cerr << "[ERROR] " << __FILE__ << ":" << __LINE__ << ": " << __func__ << ": ";
-                std::cerr << "Invalid mesh type: " << MESH_TYPE << std::endl;
+                std::cerr << "Invalid mesh type: " << static_cast<int>(MESH_TYPE) << std::endl;
                 exit(EXIT_FAILURE);
                 break;
         }
@@ -393,7 +370,7 @@ namespace VtkMesh {
     }
 
     //! Write VTK
-    void VTK_XML_Writer::writeVtkFile(const std::string& filename){
+    VTKMESH_INLINE void VTK_XML_Writer::writeVtkFile(const std::string& filename){
 
         while(!tagEnd.empty()){
             writeTagEnd(tagEnd.top());
@@ -419,4 +396,4 @@ namespace VtkMesh {
         return;
     }
 
-}  // namespace VtkMesh
+}  // namespace vtkmesh

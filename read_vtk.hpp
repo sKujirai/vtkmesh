@@ -14,8 +14,9 @@
 #include <map>
 #include <mutex>
 #include <boost/property_tree/xml_parser.hpp>
+#include "config.hpp"
 
-namespace VtkMesh {
+namespace vtkmesh {
 
     /**
      * @class VTK_XML_Reader
@@ -36,9 +37,11 @@ namespace VtkMesh {
         const std::vector<std::string> DataTypeList = {R"(Points)", R"(Cells)", R"(PointData)", R"(CellData)"};
         const std::vector<std::string> MethodList = {R"(FiniteElement)", R"(Meshfree)", R"(MeshfreeELM)"};
 
-        const std::map<std::string, std::map<std::string, bool>> config = {{R"(FiniteElement)", {{R"(use mesh)", true}}},
-                                                                           {R"(Meshfree)", {{R"(use mesh)", false}}},
-                                                                           {R"(MeshfreeELM)", {{R"(use mesh)", true}}}}; 
+        const std::map<std::string, std::map<std::string, bool>> config = {
+            {R"(FiniteElement)", {{R"(use mesh)", true}}},
+            {R"(Meshfree)", {{R"(use mesh)", false}}},
+            {R"(MeshfreeELM)", {{R"(use mesh)", true}}}
+        };
 
         //! Constraints
         enum class Constraint : int {
@@ -69,34 +72,34 @@ namespace VtkMesh {
         std::vector<T> readDataArrayValue(std::string&& dataType, std::string&& tag);
 
         //! Check whether item exists from tag
-        bool doesExistItems(std::string&& tagRoot, std::string&& tagChild);
+        VTKMESH_API bool doesExistItems(std::string&& tagRoot, std::string&& tagChild);
 
         //! Read connectivity and value
-        std::tuple<std::vector<std::vector<int>>, Eigen::Matrix3Xd> readPointTableValue(std::string&& tagTable, std::string&& tagValue);
+        VTKMESH_API std::tuple<std::vector<std::vector<int>>, Eigen::Matrix3Xd> readPointTableValue(std::string&& tagTable, std::string&& tagValue);
 
         //! Read analysis method
-        void readMethod();
+        VTKMESH_API void readMethod();
 
         //! Read coordinates
-        void readCoordinates();
+        VTKMESH_API void readCoordinates();
 
         //! Read connectivity
-        void readConnectivity();
+        VTKMESH_API void readConnectivity();
 
         //! Read boundary condition
-        void readBoundaryCondition();
+        VTKMESH_API void readBoundaryCondition();
 
         //! Read connectivity
-        void readMultiPointConstraints();
+        VTKMESH_API void readMultiPointConstraints();
 
         //! Set specimen size, cross-sectional area and length of axis loading
-        void setGeometricalInformation();
+        VTKMESH_API void setGeometricalInformation();
 
         //! Read material, crystal, ...
-        void readSubstructure(std::string&& dataType, int valDataArraySize);
+        VTKMESH_API void readSubstructure(std::string&& dataType, int valDataArraySize);
 
         //! Read mesh info.
-        void readMeshInfo();
+        VTKMESH_API void readMeshInfo();
 
         //! Check size of vector
         template <typename T>
@@ -201,8 +204,11 @@ namespace VtkMesh {
 
     };
 
-}  // namespace VtkMesh
+}  // namespace vtkmesh
 
 #include "detail/read_vtk_impl.hpp"
+#ifdef VTKMESH_HEADER_ONLY
+    #include "detail/read_vtk_impl.cpp"
+#endif
 
 #endif
