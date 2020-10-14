@@ -1,5 +1,7 @@
 # executable file
 example/example
+example/example_head
+example/example_lib
 example/out.vtu
 
 

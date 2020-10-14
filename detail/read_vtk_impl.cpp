@@ -14,7 +14,7 @@
 namespace vtkmesh {
 
     //! Read analysis method
-    void VTK_XML_Reader::readMethod(){
+    VTKMESH_INLINE void VTK_XML_Reader::readMethod(){
 
         const std::string tagMethod = VTK_Root + jointTags(R"(<xmlattr>)", R"(Name)");
         method_ = pt_.get<std::string>(tagMethod);
@@ -30,7 +30,7 @@ namespace vtkmesh {
     }
 
     //! Read coordinates
-    void VTK_XML_Reader::readCoordinates(){
+    VTKMESH_INLINE void VTK_XML_Reader::readCoordinates(){
 
         // Read Coordinates
         Eigen::Matrix3Xd Coords3d = Eigen::Matrix3Xd::Zero(3, Mesh_.nPoint);
@@ -74,7 +74,7 @@ namespace vtkmesh {
     }
 
     //! Read connectivity
-    void VTK_XML_Reader::readConnectivity(){
+    VTKMESH_INLINE void VTK_XML_Reader::readConnectivity(){
 
         // Read connectivity
         Mesh_.Lnodes.clear();
@@ -119,7 +119,7 @@ namespace vtkmesh {
     }
 
     //! Read table and corresponding value (nodal value)
-    std::tuple<std::vector<std::vector<int>>, Eigen::Matrix3Xd> VTK_XML_Reader::readPointTableValue(std::string&& tagTable, std::string&& tagValue){
+    VTKMESH_INLINE std::tuple<std::vector<std::vector<int>>, Eigen::Matrix3Xd> VTK_XML_Reader::readPointTableValue(std::string&& tagTable, std::string&& tagValue){
 
         std::vector<std::vector<int>> Table(Mesh_.nPoint, std::vector<int>(3, 0));
         Eigen::Matrix3Xd Value = Eigen::Matrix3Xd::Zero(3, Mesh_.nPoint);
@@ -181,7 +181,7 @@ namespace vtkmesh {
     }
 
     //! Read boundary condition
-    void VTK_XML_Reader::readBoundaryCondition(){
+    VTKMESH_INLINE void VTK_XML_Reader::readBoundaryCondition(){
 
         BC_.nBcgvn = 0;
         BC_.nBcnzr = 0;
@@ -227,7 +227,7 @@ namespace vtkmesh {
     }
 
     //! Read multi-point constraints
-    void VTK_XML_Reader::readMultiPointConstraints(){
+    VTKMESH_INLINE void VTK_XML_Reader::readMultiPointConstraints(){
 
         MPC_.nSlMpc = 0;
         MPC_.slvMpc.clear();
@@ -283,7 +283,7 @@ namespace vtkmesh {
     }
 
     // Set specimen size, cross-sectional area and length of axis loading
-    void VTK_XML_Reader::setGeometricalInformation(){
+    VTKMESH_INLINE void VTK_XML_Reader::setGeometricalInformation(){
 
         // Specimen size
         Mesh_.specimenSize = Mesh_.Coords.rowwise().maxCoeff() - Mesh_.Coords.rowwise().minCoeff();
@@ -310,7 +310,7 @@ namespace vtkmesh {
     }
 
     //! Check whether items exist or not
-    bool VTK_XML_Reader::doesExistItems(std::string&& tagRoot, std::string&& tagChild){
+    VTKMESH_INLINE bool VTK_XML_Reader::doesExistItems(std::string&& tagRoot, std::string&& tagChild){
 
         std::string strTag = VTK_Piece;
         if(tagRoot.length() > 0){
@@ -338,7 +338,7 @@ namespace vtkmesh {
     }
 
     //! Read material, crystal, ...
-    void VTK_XML_Reader::readSubstructure(std::string&& dataType, int valDataArraySize){
+    VTKMESH_INLINE void VTK_XML_Reader::readSubstructure(std::string&& dataType, int valDataArraySize){
 
         // Grain number
         if(doesExistItems(std::forward<std::string>(dataType), R"(Cryst)")){
@@ -399,9 +399,8 @@ namespace vtkmesh {
 
     }
 
-
     //! Read mesh info
-    void VTK_XML_Reader::readMeshInfo(){
+    VTKMESH_INLINE void VTK_XML_Reader::readMeshInfo(){
 
         // Analysis method
         readMethod();

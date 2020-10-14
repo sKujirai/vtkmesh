@@ -14,6 +14,7 @@
 #include <stack>
 #include <mutex>
 #include <Eigen/Core>
+#include "config.hpp"
 
 namespace vtkmesh {
 
@@ -49,22 +50,19 @@ namespace vtkmesh {
         const std::vector<std::string> vtkDataUnit {"PointData", "CellData"};
 
         //! Check tag
-        bool checkType(const std::vector<std::string>& strVec, const std::string& inputStr);
+        VTKMESH_API bool checkType(const std::vector<std::string>& strVec, const std::string& inputStr);
 
         //! Write tag [begin]
-        void writeTagBegin(const std::string& strbgn);
+        VTKMESH_API void writeTagBegin(const std::string& strbgn);
 
         //! Write tag [end]
-        inline void writeTagEnd(const std::string& strend);
+        VTKMESH_API void writeTagEnd(const std::string& strend);
 
         //! Write tag [begin dataArray]
-        void dataArrayBegin(const int numCmp,
-                            const std::string& datTyp,
-                            const std::string& dtName,
-                            const std::string& format = "ascii" );
+        VTKMESH_API void dataArrayBegin(const int numCmp, const std::string& datTyp, const std::string& dtName, const std::string& format = "ascii" );
 
         //! Write tag [end dataArray]
-        void dataArrayEnd();
+        VTKMESH_API void dataArrayEnd();
 
         //! Clamp value
         template <typename T>
@@ -83,32 +81,25 @@ namespace vtkmesh {
         void writeCoordinates(const TMatrix& Mat);
 
         //! Write Vector (std::vector) (Val - offset)
-        void writeVector(const std::vector<int>& vec, const int offset=0);
+        VTKMESH_API void writeVector(const std::vector<int>& vec, const int offset=0);
 
         //! Write Vector of Vector (Val - offset)
-        void writeVec2nd(const std::vector<std::vector<int>>& vec2nd, const int offset=0);
+        VTKMESH_API void writeVec2nd(const std::vector<std::vector<int>>& vec2nd, const int offset=0);
 
         //! Set Value
-        void setValue(const Eigen::MatrixXd& Val,
-                      const std::string& dlabel,
-                      const std::string& datTyp = "Float32",
-                      const std::string& format = "ascii" );
+        VTKMESH_API void setValue(const Eigen::MatrixXd& Val, const std::string& dlabel, const std::string& datTyp = "Float32", const std::string& format = "ascii" );
 
         //! Set Value (std::vector)
-        void setValue(const std::vector<int>& Val,
-                      const std::string& dlabel,
-                      const std::string& datTyp = "Int32",
-                      const std::string& format = "ascii" );
+        VTKMESH_API void setValue(const std::vector<int>& Val, const std::string& dlabel, const std::string& datTyp = "Int32", const std::string& format = "ascii" );
 
         //! Set dummy connectivity for Meshfree
-        std::vector<std::vector<int>> getDummyConnectivity(const Eigen::MatrixXd& Coords);
+        VTKMESH_API std::vector<std::vector<int>> getDummyConnectivity(const Eigen::MatrixXd& Coords);
 
         //! Get cell type
-        int getCelltype(const int ndofnd, const int nnodes);
+        VTKMESH_API int getCelltype(const int ndofnd, const int nnodes);
 
         //! Set mesh info for FEM
-        void setMeshInfoELM(const Eigen::MatrixXd& Coords,
-                            const std::vector<std::vector<int>>& Lnodes);
+        VTKMESH_API void setMeshInfoELM(const Eigen::MatrixXd& Coords, const std::vector<std::vector<int>>& Lnodes);
 
         // Prohibit copy & move
         VTK_XML_Writer() = delete;
@@ -127,45 +118,33 @@ namespace vtkmesh {
         virtual ~VTK_XML_Writer(){}
 
         //! Begin Tag
-        void begin(const std::string& vtkUnit);
+        VTKMESH_API void begin(const std::string& vtkUnit);
 
         //! End Tag
-        void end(const std::string& vtkUnit);
+        VTKMESH_API void end(const std::string& vtkUnit);
 
         //! Set nodal value
-        void setNodalValue(const Eigen::MatrixXd& Val,
-                           const std::string& dlabel,
-                           const std::string& datTyp = "Float32",
-                           const std::string& format = "ascii" );
+        VTKMESH_API void setNodalValue(const Eigen::MatrixXd& Val, const std::string& dlabel, const std::string& datTyp = "Float32", const std::string& format = "ascii" );
 
         //! Set nodal value (std::vector)
-        void setNodalValue(const std::vector<int>& Val,
-                           const std::string& dlabel,
-                           const std::string& datTyp = "Int32",
-                           const std::string& format = "ascii" );
+        VTKMESH_API void setNodalValue(const std::vector<int>& Val, const std::string& dlabel, const std::string& datTyp = "Int32", const std::string& format = "ascii" );
 
         //! Set value on each element
-        void setElmValue(const Eigen::MatrixXd& Val,
+        VTKMESH_API void setElmValue(const Eigen::MatrixXd& Val,
                          const std::string& dlabel,
                          const std::string& datTyp = "Float32",
                          const std::string& format = "ascii" );
 
         //! Set value on each element (std::vector)
-        void setElmValue(const std::vector<int>& Val,
-                         const std::string& dlabel,
-                         const std::string& datTyp = "Int32",
-                         const std::string& format = "ascii" );
+        VTKMESH_API void setElmValue(const std::vector<int>& Val, const std::string& dlabel, const std::string& datTyp = "Int32", const std::string& format = "ascii" );
 
         //! Set format
-        void setVtkFormat(const std::string& _vtkType,
-                          const std::string& _discretization_method = "FiniteElement",
-                          const std::string& _byteOrder = "LittleEndian");
+        VTKMESH_API void setVtkFormat(const std::string& _vtkType, const std::string& _discretization_method = "FiniteElement", const std::string& _byteOrder = "LittleEndian");
 
         //! Set Coordinates
-        void setMeshInfo(const Eigen::MatrixXd& Coords,
-                         const std::vector<std::vector<int>>& Lnodes=std::vector<std::vector<int>>(0, std::vector<int>(0)));
+        VTKMESH_API void setMeshInfo(const Eigen::MatrixXd& Coords, const std::vector<std::vector<int>>& Lnodes=std::vector<std::vector<int>>(0, std::vector<int>(0)));
         //! Write VTK
-        void writeVtkFile(const std::string& filename);
+        VTKMESH_API void writeVtkFile(const std::string& filename);
 
         // Getter
         inline int getOffset() const { return offset; }
@@ -175,5 +154,8 @@ namespace vtkmesh {
 }  // namespace vtkmesh
 
 #include "detail/write_vtk_impl.hpp"
+#ifdef VTKMESH_HEADER_ONLY
+    #include "detail/write_vtk_impl.cpp"
+#endif
 
 #endif
