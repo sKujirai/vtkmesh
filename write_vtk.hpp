@@ -15,7 +15,7 @@
 #include <mutex>
 #include <Eigen/Core>
 
-namespace VtkMesh {
+namespace vtkmesh {
 
     /**
      * @class VTK_XML_Writer
@@ -172,7 +172,7 @@ namespace VtkMesh {
 
     };
 
-}  // namespace VtkMesh
+}  // namespace vtkmesh
 
 #include "detail/write_vtk_impl.hpp"
 

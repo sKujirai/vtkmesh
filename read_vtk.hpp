@@ -15,7 +15,7 @@
 #include <mutex>
 #include <boost/property_tree/xml_parser.hpp>
 
-namespace VtkMesh {
+namespace vtkmesh {
 
     /**
      * @class VTK_XML_Reader
@@ -201,7 +201,7 @@ namespace VtkMesh {
 
     };
 
-}  // namespace VtkMesh
+}  // namespace vtkmesh
 
 #include "detail/read_vtk_impl.hpp"
 

@@ -10,7 +10,7 @@
 #include <iostream>
 #include "../write_vtk.hpp"
 
-namespace VtkMesh {
+namespace vtkmesh {
 
     //! Check tag
     bool VTK_XML_Writer::checkType(const std::vector<std::string>& strVec, const std::string& inputStr){
@@ -419,4 +419,4 @@ namespace VtkMesh {
         return;
     }
 
-}  // namespace VtkMesh
+}  // namespace vtkmesh

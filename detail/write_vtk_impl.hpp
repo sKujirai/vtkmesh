@@ -21,7 +21,7 @@
 #include <limits>
 #include <Eigen/Core>
 
-namespace VtkMesh {
+namespace vtkmesh {
 
     //! Clamp value
     template <typename T>
@@ -78,6 +78,6 @@ namespace VtkMesh {
         return;
     }
 
-}  // namespace VtkMesh
+}  // namespace vtkmesh
 
 #endif

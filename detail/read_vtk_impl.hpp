@@ -20,7 +20,7 @@
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/lexical_cast.hpp>
 
-namespace VtkMesh {
+namespace vtkmesh {
 
     //! Read components
     template <typename T>
@@ -125,6 +125,6 @@ namespace VtkMesh {
 
     }
 
-}  // namespace VtkMesh
+}  // namespace vtkmesh
 
 #endif

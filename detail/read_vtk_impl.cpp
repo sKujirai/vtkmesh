@@ -11,7 +11,7 @@
 #include <limits>
 #include "../read_vtk.hpp"
 
-namespace VtkMesh {
+namespace vtkmesh {
 
     //! Read analysis method
     void VTK_XML_Reader::readMethod(){
@@ -432,4 +432,4 @@ namespace VtkMesh {
 
     }
 
-}  // namespace VtkMesh
+}  // namespace vtkmesh

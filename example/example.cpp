@@ -13,9 +13,9 @@ int main(void){
 
     std::cout << "Reading .vtk file: " << filename << std::endl;
 
-    std::unique_ptr<VtkMesh::VTK_XML_Reader> vtkr;
+    std::unique_ptr<vtkmesh::VTK_XML_Reader> vtkr;
     try {
-        vtkr = std::make_unique<VtkMesh::VTK_XML_Reader>(filename);
+        vtkr = std::make_unique<vtkmesh::VTK_XML_Reader>(filename);
     } catch (const std::exception& e){
         std::cout << e.what() << std::endl;
         exit(EXIT_FAILURE);
@@ -23,9 +23,9 @@ int main(void){
 
     std::cout << "Writing .vtk file: " << outputfile << std::endl;
 
-    std::unique_ptr<VtkMesh::VTK_XML_Writer> vtkw;
+    std::unique_ptr<vtkmesh::VTK_XML_Writer> vtkw;
     try {
-        vtkw = std::make_unique<VtkMesh::VTK_XML_Writer>(VtkMesh::VTK_XML_Writer::ELEMENT_BASED, VtkMesh::VTK_XML_Writer::ZERO_BASED);
+        vtkw = std::make_unique<vtkmesh::VTK_XML_Writer>(vtkmesh::VTK_XML_Writer::ELEMENT_BASED, vtkmesh::VTK_XML_Writer::ZERO_BASED);
     } catch (const std::exception& e){
         std::cout << e.what() << std::endl;
         exit(EXIT_FAILURE);
